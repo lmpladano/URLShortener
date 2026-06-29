@@ -1,3 +1,7 @@
+import { Button } from "@/components/ui/button";
+import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+
 type FormComponentProps = {
   onCreated: () => void | Promise<void>;
 };
@@ -26,8 +30,20 @@ export default function FormComponent({ onCreated }: FormComponentProps) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <input name="rawLink"></input>
-        <button type="submit">click</button>
+        <FieldGroup>
+          <div className="flex flex-col items-center gap-2 text-center">
+            <h1 className="text-xl font-bold">URLShortener</h1>
+          </div>
+          <Field>
+            <Input name="rawLink" />
+            <FieldDescription className="px-6 text-center">
+              paste in your URL
+            </FieldDescription>
+          </Field>
+          <Field>
+            <Button type="submit">Create ShortUrl</Button>
+          </Field>
+        </FieldGroup>
       </form>
     </>
   );

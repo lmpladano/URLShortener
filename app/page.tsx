@@ -29,8 +29,10 @@ export default async function Home() {
   const data = await fetchListData();
 
   return (
-    <>
-      <UrlShortenerClient data={data} />
-    </>
+    <div className="dark flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <UrlShortenerClient data={data} />
+      </div>
+    </div>
   );
 }
