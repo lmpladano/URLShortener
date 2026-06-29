@@ -1,6 +1,6 @@
 import UrlShortenerClient from "./components/UrlShortenerClient";
 
-export default function Home() {
+export default async function Home() {
   async function fetchListData() {
     const url = `http://localhost:3000/short`;
 
@@ -26,9 +26,11 @@ export default function Home() {
     }
   }
 
+  const data = await fetchListData();
+
   return (
     <>
-      <UrlShortenerClient data={fetchListData()} />
+      <UrlShortenerClient data={data} />
     </>
   );
 }

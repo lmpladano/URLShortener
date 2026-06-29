@@ -14,8 +14,9 @@ type ListComponentProps = {
 };
 
 export default function UrlShortenerClient({ data }: ListComponentProps) {
-  const [list, setList] = useState<UrlItem[]>([]);
-  async function fetchListData() {
+  const [list, setList] = useState<UrlItem[]>(data);
+
+  async function fetchListData(): Promise<void> {
     const url = `http://localhost:3000/short`;
 
     try {
@@ -31,13 +32,11 @@ export default function UrlShortenerClient({ data }: ListComponentProps) {
       const fetchedData: UrlItem[] = await response.json();
       console.log(fetchedData);
       setList(fetchedData);
-      return fetchedData;
     } catch (error: unknown) {
       // 4. Catches network failures AND the custom error thrown above
       const message = error instanceof Error ? error.message : String(error);
       console.error("Fetch operation failed:", message);
       // Re-throw or return a fallback value depending on application needs
-      return [];
     }
   }
   return (
