@@ -1,6 +1,20 @@
-import UrlShortenerClient from "./components/UrlShortenerClient";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+
+import FormComponent from "./FormComponent";
+import ListComponent from "./ListComponent";
+
+interface UrlItem {
+  shortenedUrl: string;
+}
+
+type ListComponentProps = {
+  data: UrlItem[];
+};
+
+export default function UrlShortenerClient({ data }: ListComponentProps) {
+  const [list, setList] = useState<UrlItem[]>([]);
   async function fetchListData() {
     const url = `http://localhost:3000/short`;
 
@@ -14,9 +28,10 @@ export default function Home() {
       }
 
       // 3. Parse data only if the response is safe
-      const data = await response.json();
-      console.log(data);
-      return data;
+      const fetchedData: UrlItem[] = await response.json();
+      console.log(fetchedData);
+      setList(fetchedData);
+      return fetchedData;
     } catch (error: unknown) {
       // 4. Catches network failures AND the custom error thrown above
       const message = error instanceof Error ? error.message : String(error);
@@ -25,10 +40,10 @@ export default function Home() {
       return [];
     }
   }
-
   return (
     <>
-      <UrlShortenerClient data={fetchListData()} />
+      <FormComponent onCreated={fetchListData} />
+      <ListComponent list={list} />
     </>
   );
 }
