@@ -13,17 +13,21 @@ export default function FormComponent({ onCreated }: FormComponentProps) {
     const form = e.currentTarget;
     const rawlink: string = String(new FormData(form).get("rawLink") || "");
 
-    try {
-      const response = await fetch("http://localhost:3000/short", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ value: rawlink }),
-      });
-      const data = await response.text();
-      console.log(data);
-      onCreated();
-    } catch (error) {
-      console.error("error submitting", error);
+    if (!rawlink || !URL.canParse(rawlink)) {
+      window.alert("type a valid url");
+    } else {
+      try {
+        const response = await fetch("http://localhost:3000/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ value: rawlink }),
+        });
+        const data = await response.text();
+        console.log(data);
+        onCreated();
+      } catch (error) {
+        console.error("error submitting", error);
+      }
     }
   }
 
@@ -31,14 +35,14 @@ export default function FormComponent({ onCreated }: FormComponentProps) {
     <>
       <form onSubmit={handleSubmit}>
         <FieldGroup>
-          <div className="flex flex-col items-center gap-2 text-center">
+          <div className="flex flex-col items-center text-center">
             <h1 className="text-xl font-bold">URLShortener</h1>
           </div>
           <Field>
-            <Input name="rawLink" />
-            <FieldDescription className="px-6 text-center">
+            <FieldDescription className="text-center">
               paste in your URL
             </FieldDescription>
+            <Input name="rawLink" />
           </Field>
           <Field>
             <Button type="submit">Create ShortUrl</Button>

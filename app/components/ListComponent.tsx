@@ -1,6 +1,10 @@
-type UrlItem = {
+import { ListItem } from "./ListItem";
+
+interface UrlItem {
   shortenedUrl: string;
-};
+  original: string;
+  base62: string;
+}
 
 type ListComponentProps = {
   list: UrlItem[];
@@ -10,14 +14,13 @@ export default function ListComponent({ list }: ListComponentProps) {
   const LinkList = list.map((item) => {
     return (
       <li key={item.shortenedUrl}>
-        <a href={item.shortenedUrl}>shortened: {item.shortenedUrl}</a>
+        <ListItem item={item} />
       </li>
     );
   });
 
   return (
     <>
-      <h1>shortened url list:</h1>
       <ul>{LinkList}</ul>
     </>
   );

@@ -7,6 +7,8 @@ import ListComponent from "./ListComponent";
 
 interface UrlItem {
   shortenedUrl: string;
+  original: string;
+  base62: string;
 }
 
 type ListComponentProps = {
@@ -17,7 +19,7 @@ export default function UrlShortenerClient({ data }: ListComponentProps) {
   const [list, setList] = useState<UrlItem[]>(data);
 
   async function fetchListData(): Promise<void> {
-    const url = `http://localhost:3000/short`;
+    const url = `http://localhost:3000/`;
 
     try {
       // 1. Await the initial network connection
