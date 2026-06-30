@@ -1,10 +1,6 @@
 import { ListItem } from "./ListItem";
 
-interface UrlItem {
-  shortenedUrl: string;
-  original: string;
-  base62: string;
-}
+import type { UrlItem } from "@/lib/types";
 
 type ListComponentProps = {
   list: UrlItem[];

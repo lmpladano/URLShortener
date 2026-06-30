@@ -22,9 +22,19 @@ export default function FormComponent({ onCreated }: FormComponentProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ value: rawlink }),
         });
-        const data = await response.text();
-        console.log(data);
-        onCreated();
+        if (response.ok) {
+          const data = await response.text();
+          console.log(data);
+          onCreated();
+        } else {
+          const errorMessage = await response.text();
+
+          console.error("POST failed", {
+            status: response.status,
+            statusText: response.statusText,
+            message: errorMessage,
+          });
+        }
       } catch (error) {
         console.error("error submitting", error);
       }
