@@ -1,5 +1,5 @@
 export type UrlItem = {
-  shortenedUrl: string;
+  shortened: string;
   original: string;
   base62: string;
 };
