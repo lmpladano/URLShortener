@@ -9,7 +9,6 @@ import type { UrlItem } from "@/lib/types";
 
 type ListComponentProps = {
   data: UrlItem[];
-  onCreated: () => void | Promise<void>;
 };
 
 export default function UrlShortenerClient({ data }: ListComponentProps) {
@@ -22,8 +21,8 @@ export default function UrlShortenerClient({ data }: ListComponentProps) {
 
   return (
     <>
-      <FormComponent onCreated={refreshList} />
-      <ListComponent onCreated={refreshList} list={list} />
+      <FormComponent onListChanged={refreshList} />
+      <ListComponent onListChanged={refreshList} list={list} />
     </>
   );
 }

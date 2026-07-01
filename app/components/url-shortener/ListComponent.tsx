@@ -4,14 +4,17 @@ import type { UrlItem } from "@/lib/types";
 
 type ListComponentProps = {
   list: UrlItem[];
-  onCreated: () => void | Promise<void>;
+  onListChanged: () => void | Promise<void>;
 };
 
-export default function ListComponent({ list, onCreated }: ListComponentProps) {
+export default function ListComponent({
+  list,
+  onListChanged,
+}: ListComponentProps) {
   const LinkList = list.map((item) => {
     return (
       <li key={item.shortened}>
-        <ListItem onCreated={onCreated} item={item} />
+        <ListItem onListChanged={onListChanged} item={item} />
       </li>
     );
   });

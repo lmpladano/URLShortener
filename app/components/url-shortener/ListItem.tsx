@@ -1,4 +1,6 @@
+import { deleteShortUrl } from "@/lib/api/url";
 import { ChevronRightIcon } from "lucide-react";
+import type { UrlItem } from "@/lib/types";
 
 import {
   Item,
@@ -8,46 +10,19 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 
-interface UrlItem {
-  shortened: string;
-  original: string;
-  base62: string;
-}
-
 type ListComponentProps = {
   item: UrlItem;
-  onCreated: () => void | Promise<void>;
+  onListChanged: () => void | Promise<void>;
 };
 
-export function ListItem({ item, onCreated }: ListComponentProps) {
+export function ListItem({ item, onListChanged }: ListComponentProps) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const dentry: string = item.base62;
-
-    try {
-      const response = await fetch("http://localhost:3000/delete", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ value: dentry }),
-      });
-      if (response.ok) {
-        const data = await response.text();
-        console.log(data);
-        onCreated();
-      } else {
-        const errorMessage = await response.text();
-
-        console.error("POST failed", {
-          status: response.status,
-          statusText: response.statusText,
-          message: errorMessage,
-        });
-      }
-    } catch (error) {
-      console.error("error submitting", error);
-    }
+    await deleteShortUrl(item.base62);
+    await onListChanged();
   }
+
   return (
     <>
       <div className="flex w-full max-w-full flex-col gap-4 my-5">

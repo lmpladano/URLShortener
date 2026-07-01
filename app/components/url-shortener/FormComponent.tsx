@@ -1,43 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { createShortUrl } from "@/lib/api/url";
 
 type FormComponentProps = {
-  onCreated: () => void | Promise<void>;
+  onListChanged: () => void | Promise<void>;
 };
 
-export default function FormComponent({ onCreated }: FormComponentProps) {
+export default function FormComponent({ onListChanged }: FormComponentProps) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const form = e.currentTarget;
     const rawlink: string = String(new FormData(form).get("rawLink") || "");
 
-    if (!rawlink || !URL.canParse(rawlink)) {
+    if (!URL.canParse(rawlink)) {
       window.alert("type a valid url");
     } else {
-      try {
-        const response = await fetch("http://localhost:3000/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ value: rawlink }),
-        });
-        if (response.ok) {
-          const data = await response.text();
-          console.log(data);
-          onCreated();
-        } else {
-          const errorMessage = await response.text();
-
-          console.error("POST failed", {
-            status: response.status,
-            statusText: response.statusText,
-            message: errorMessage,
-          });
-        }
-      } catch (error) {
-        console.error("error submitting", error);
-      }
+      await createShortUrl(rawlink);
+      await onListChanged();
     }
   }
 
