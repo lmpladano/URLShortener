@@ -17,8 +17,13 @@ export default function FormComponent({ onListChanged }: FormComponentProps) {
     if (!URL.canParse(rawlink)) {
       window.alert("type a valid url");
     } else {
-      await createShortUrl(rawlink);
-      await onListChanged();
+      try {
+        await createShortUrl(rawlink);
+        await onListChanged();
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : error;
+        console.log(message);
+      }
     }
   }
 

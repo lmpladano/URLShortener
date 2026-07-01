@@ -18,9 +18,13 @@ type ListComponentProps = {
 export function ListItem({ item, onListChanged }: ListComponentProps) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    await deleteShortUrl(item.base62);
-    await onListChanged();
+    try {
+      await deleteShortUrl(item.base62);
+      await onListChanged();
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : error;
+      console.log(message);
+    }
   }
 
   return (
