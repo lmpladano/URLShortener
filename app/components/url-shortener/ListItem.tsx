@@ -1,6 +1,7 @@
 import { deleteShortUrl } from "@/lib/api/url";
-import { ChevronRightIcon } from "lucide-react";
+import { ExternalLink, Eraser, Copy } from "lucide-react";
 import type { UrlItem } from "@/lib/types";
+import { Button } from "@/components/ui/button";
 
 import {
   Item,
@@ -29,25 +30,29 @@ export function ListItem({ item, onListChanged }: ListComponentProps) {
 
   return (
     <>
-      <div className="flex w-full max-w-full flex-col gap-4 my-5">
-        <Item variant="outline">
+      <Item key={item.base62} variant="outline" className="my-3">
+        <ItemContent className="gap-1">
+          <ItemTitle>{item.shortened}</ItemTitle>
+          <ItemDescription className="truncate w-90">
+            {item.original}
+          </ItemDescription>
+        </ItemContent>
+        <ItemActions>
+          <Button variant="ghost" size="icon" className="rounded-full">
+            <Copy />
+          </Button>
+          <a href={item.shortened} target="_blank">
+            <Button variant="ghost" size="icon" className="rounded-full">
+              <ExternalLink />
+            </Button>
+          </a>
           <form onSubmit={handleSubmit}>
-            <ItemContent>
-              <a href={item.shortened} target="_blank" rel="noreferrer">
-                <ItemTitle>{item.shortened} </ItemTitle>
-              </a>
-              <ItemDescription className="truncate w-100 ">
-                {item.original}
-              </ItemDescription>
-            </ItemContent>
-            <ItemActions>
-              <ChevronRightIcon className="size-4" />
-
-              <button type="submit">delete</button>
-            </ItemActions>
+            <Button variant="ghost" size="icon" className="rounded-full">
+              <Eraser className="text-red-600" type="submit" />
+            </Button>
           </form>
-        </Item>
-      </div>
+        </ItemActions>
+      </Item>
     </>
   );
 }

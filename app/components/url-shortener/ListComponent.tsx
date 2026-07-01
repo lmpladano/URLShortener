@@ -1,6 +1,7 @@
 import { ListItem } from "./ListItem";
 
 import type { UrlItem } from "@/lib/types";
+import { ItemGroup } from "@/components/ui/item";
 
 type ListComponentProps = {
   list: UrlItem[];
@@ -21,7 +22,9 @@ export default function ListComponent({
 
   return (
     <>
-      <ul>{LinkList}</ul>
+      <ItemGroup className="flex-col m-auto max-w-3xl">
+        <ul>{LinkList}</ul>
+      </ItemGroup>
     </>
   );
 }

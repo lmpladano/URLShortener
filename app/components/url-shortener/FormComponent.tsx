@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
+import { Field, FieldGroup } from "@/components/ui/field";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 import { createShortUrl } from "@/lib/api/url";
+import { Save } from "lucide-react";
 
 type FormComponentProps = {
   onListChanged: () => void | Promise<void>;
@@ -32,16 +34,17 @@ export default function FormComponent({ onListChanged }: FormComponentProps) {
       <form onSubmit={handleSubmit}>
         <FieldGroup>
           <div className="flex flex-col items-center text-center">
-            <h1 className="text-xl font-bold">URLShortener</h1>
+            <h1 className="text-4xl font-semibold">
+              Free URLShortener For Everyone
+            </h1>
           </div>
           <Field>
-            <FieldDescription className="text-center">
-              paste in your URL
-            </FieldDescription>
-            <Input name="rawLink" />
-          </Field>
-          <Field>
-            <Button type="submit">Create ShortUrl</Button>
+            <ButtonGroup>
+              <Input placeholder="Paste in a valid Url" name="rawLink" />
+              <Button variant="outline" type="submit">
+                <Save />
+              </Button>
+            </ButtonGroup>
           </Field>
         </FieldGroup>
       </form>
