@@ -1,4 +1,6 @@
-export async function fetchListData() {
+import { UrlItem } from "../types";
+
+export async function fetchListData(): Promise<UrlItem[]> {
   const url = `http://localhost:3000/`;
 
   try {
@@ -8,7 +10,6 @@ export async function fetchListData() {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
@@ -25,7 +26,7 @@ export async function createShortUrl(rawlink: string) {
   });
   if (response.ok) {
     const data = await response.text();
-    console.log(data);
+    return data;
   } else {
     const errorMessage = await response.text();
 
@@ -41,7 +42,7 @@ export async function deleteShortUrl(dentry: string) {
   });
   if (response.ok) {
     const data = await response.text();
-    console.log(data);
+    return data;
   } else {
     const errorMessage = await response.text();
     throw new Error(errorMessage);
