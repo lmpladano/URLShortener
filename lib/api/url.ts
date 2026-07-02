@@ -4,7 +4,7 @@ export async function fetchListData(): Promise<UrlItem[]> {
   const url = `http://localhost:3000/`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { credentials: "include" });
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

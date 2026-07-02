@@ -8,7 +8,9 @@ export default function NavBar() {
           <h1 className="text-xl font-semibold">UrlShort</h1>
         </div>
         <div className="flex gap-2.5">
-          <Button>Sign In</Button>
+          <a href="http://localhost:3000/auth/signin">
+            <Button>Sign In</Button>
+          </a>
           <Button>Sign Up</Button>
         </div>
       </div>
