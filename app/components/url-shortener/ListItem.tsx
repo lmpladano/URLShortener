@@ -1,5 +1,5 @@
 import { deleteShortUrl } from "@/lib/api/url";
-import { ExternalLink, Eraser, Copy } from "lucide-react";
+import { ExternalLink, Eraser } from "lucide-react";
 import type { UrlItem } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 
@@ -23,14 +23,14 @@ export function ListItem({ item, onListChanged }: ListComponentProps) {
       await deleteShortUrl(item.base62);
       await onListChanged();
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : error;
+      const message = error instanceof Error ? error.message : String(error);
       console.log(message);
     }
   }
 
   return (
     <>
-      <Item key={item.base62} variant="outline" className="my-3">
+      <Item variant="outline" className="my-3">
         <ItemContent className="gap-1">
           <ItemTitle>{item.shortened}</ItemTitle>
           <ItemDescription className="truncate w-90">
@@ -38,17 +38,19 @@ export function ListItem({ item, onListChanged }: ListComponentProps) {
           </ItemDescription>
         </ItemContent>
         <ItemActions>
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <Copy />
-          </Button>
-          <a href={item.shortened} target="_blank">
+          <a href={item.shortened} target="_blank" rel="noreferrer">
             <Button variant="ghost" size="icon" className="rounded-full">
               <ExternalLink />
             </Button>
           </a>
           <form onSubmit={handleSubmit}>
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <Eraser className="text-red-600" type="submit" />
+            <Button
+              type="submit"
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+            >
+              <Eraser className="text-red-600" />
             </Button>
           </form>
         </ItemActions>

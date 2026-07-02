@@ -12,7 +12,7 @@ type FormComponentProps = {
 };
 
 export default function FormComponent({ onListChanged }: FormComponentProps) {
-  const [hasError, SethasError] = useState(false);
+  const [hasError, setHasError] = useState(false);
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -20,15 +20,15 @@ export default function FormComponent({ onListChanged }: FormComponentProps) {
     const rawlink: string = String(new FormData(form).get("rawLink") || "");
 
     if (!isHttpUrl(rawlink)) {
-      SethasError(true);
+      setHasError(true);
     } else {
       try {
-        SethasError(false);
+        setHasError(false);
         await createShortUrl(rawlink);
         await onListChanged();
         form.reset();
       } catch (error: unknown) {
-        const message = error instanceof Error ? error.message : error;
+        const message = error instanceof Error ? error.message : String(error);
         console.log(message);
       }
     }

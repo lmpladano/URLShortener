@@ -1,4 +1,4 @@
-import { UrlItem } from "../types";
+import type { UrlItem } from "../types";
 
 export async function fetchListData(): Promise<UrlItem[]> {
   const url = `http://localhost:3000/`;

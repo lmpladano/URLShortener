@@ -22,8 +22,12 @@ export default function ListComponent({
 
   return (
     <>
-      <ItemGroup className="flex-col m-auto max-w-3xl">
-        <ul>{LinkList}</ul>
+      <ItemGroup className="flex-col m-auto p-5 border rounded-md min-h-200">
+        {list.length === 0 ? (
+          <span>Shortened Links will appear here when created.</span>
+        ) : (
+          <ul>{LinkList}</ul>
+        )}
       </ItemGroup>
     </>
   );
