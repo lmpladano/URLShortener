@@ -1,9 +1,15 @@
+"use client";
+
 import { createContext, useState, useEffect } from "react";
 import { authHelper } from "@/lib/api/url";
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext<boolean | null>(null);
 
-export default function AuthContextProvider() {
+export default function AuthContextProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [isAuthencticated, setIsAuthenticaded] = useState(false);
 
   useEffect(() => {
@@ -12,12 +18,16 @@ export default function AuthContextProvider() {
       if (authenticated.authenticated) {
         console.log("This keeps being true");
         console.log(authenticated.authenticated);
-        setIsAuthenticaded(authenticated);
+        setIsAuthenticaded(authenticated.authenticated);
       }
     }
 
     void loadAuthHelper();
   }, []);
 
-  return <AuthContext.Provider>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={isAuthencticated}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

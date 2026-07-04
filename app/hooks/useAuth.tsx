@@ -1,19 +1,14 @@
-import { useState, useEffect } from "react";
-import { authHelper } from "@/lib/api/url";
+"use client";
+
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function useAuth() {
-  const [isAuthencticated, setIsAuthenticaded] = useState(false);
+  const auth = useContext(AuthContext);
 
-  useEffect(() => {
-    async function loadAuthHelper() {
-      const authenticated = await authHelper();
-      if (authenticated.authenticated) {
-        setIsAuthenticaded(authenticated);
-      }
-    }
+  if (auth === null) {
+    throw new Error("useAuth must be used inside AuthProvider");
+  }
 
-    void loadAuthHelper();
-  }, []);
-
-  return isAuthencticated;
+  return auth;
 }
