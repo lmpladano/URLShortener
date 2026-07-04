@@ -18,6 +18,24 @@ export async function fetchListData(): Promise<UrlItem[]> {
   }
 }
 
+export async function authHelper() {
+  const url = `http://localhost:3000/api/auth/me`;
+
+  try {
+    const response = await fetch(url, { credentials: "include" });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("Fetch operation failed:", message);
+    return message;
+  }
+}
+
 export async function createShortUrl(rawlink: string) {
   const response = await fetch("http://localhost:3000/", {
     method: "POST",

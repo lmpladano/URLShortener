@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import FormComponent from "./FormComponent";
 import ListComponent from "./ListComponent";
+import useAuth from "@/app/hooks/useAuth";
 import { fetchListData } from "@/lib/api/url";
 import type { UrlItem } from "@/lib/types";
 
@@ -37,6 +38,7 @@ export default function UrlShortenerClient() {
     <>
       <FormComponent onListChanged={refreshList} />
       <ListComponent onListChanged={refreshList} list={list} />
+      {useAuth() ? <span>you are in</span> : <span>you are out</span>}
     </>
   );
 }

@@ -1,4 +1,7 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import useAuth from "@/app/hooks/useAuth";
 
 export default function NavBar() {
   return (
@@ -8,10 +11,15 @@ export default function NavBar() {
           <h1 className="text-xl font-semibold">UrlShort</h1>
         </div>
         <div className="flex gap-2.5">
-          <a href="http://localhost:3000/auth/signin">
-            <Button>Sign In</Button>
-          </a>
-          <Button>Sign Up</Button>
+          {useAuth() ? (
+            <a href="http://localhost:3000/auth/signout">
+              <Button>Sign Out</Button>
+            </a>
+          ) : (
+            <a href="http://localhost:3000/auth/signin">
+              <Button>Sign In</Button>
+            </a>
+          )}
         </div>
       </div>
     </>
