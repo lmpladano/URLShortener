@@ -41,6 +41,7 @@ export async function createShortUrl(rawlink: string) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ value: rawlink }),
+    credentials: "include",
   });
   if (response.ok) {
     const data = await response.text();

@@ -1,5 +1,5 @@
 import { ListItem } from "./ListItem";
-
+import useAuth from "@/app/hooks/useAuth";
 import type { UrlItem } from "@/lib/types";
 import { ItemGroup } from "@/components/ui/item";
 
@@ -22,7 +22,8 @@ export default function ListComponent({
 
   return (
     <>
-      <ItemGroup className="flex-col m-auto p-5 border rounded-md min-h-200">
+      <ItemGroup className="flex-col m-auto p-5 border rounded-md min-h-100">
+        {!useAuth() ? <span>plesase log in</span> : <span></span>}
         {list.length === 0 ? (
           <span>Shortened Links will appear here when created.</span>
         ) : (
