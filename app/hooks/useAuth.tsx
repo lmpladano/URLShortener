@@ -10,5 +10,7 @@ export default function useAuth() {
     throw new Error("useAuth must be used inside AuthProvider");
   }
 
+  console.log(auth);
+
   return auth;
 }

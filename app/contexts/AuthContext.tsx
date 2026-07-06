@@ -11,6 +11,7 @@ export default function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [isAuthencticated, setIsAuthenticaded] = useState(false);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     async function loadAuthHelper() {
@@ -19,15 +20,17 @@ export default function AuthContextProvider({
         console.log("This keeps being true");
         console.log(authenticated.authenticated);
         setIsAuthenticaded(authenticated.authenticated);
+        setUser(authenticated.user);
       }
     }
 
     void loadAuthHelper();
   }, []);
-
+  const authValue = {
+    isAuthencticated,
+    user,
+  };
   return (
-    <AuthContext.Provider value={isAuthencticated}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
   );
 }
