@@ -1,61 +1,80 @@
 "use client";
-
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-  FieldSeparator,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
+
 import { Link } from "lucide-react";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form>
-        <FieldGroup>
-          <div className="flex flex-col items-center gap-2 text-center">
-            <a
-              href="#"
-              className="flex flex-col items-center gap-2 font-medium"
-            >
-              <div className="flex size-8 items-center justify-center rounded-md">
-                <Link className="size-6" />
-              </div>
-            </a>
-            <h1 className="text-xl font-bold">Welcome to Yourl</h1>
-          </div>
+export function LoginForm() {
+  const [token, setToken] = useState<{ csrfToken: string }>({ csrfToken: "" });
 
-          <Field className="grid gap-4 sm:grid-cols-2">
-            <Button variant="outline" type="button">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                  d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"
-                  fill="currentColor"
-                />
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      const url = `http://localhost:3000/auth/csrf`;
+
+      try {
+        const response = await fetch(url, { credentials: "include" });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = (await response.json()) as { csrfToken: string };
+        setToken(data);
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.error("Fetch operation failed:", message);
+      }
+    };
+
+    void fetchCsrfToken();
+  }, []);
+  return (
+    <div className="flex flex-col gap-6">
+      <FieldGroup>
+        <div className="flex flex-col items-center gap-2 text-center">
+          <a href="#" className="flex flex-col items-center gap-2 font-medium">
+            <div className="flex size-8 items-center justify-center rounded-md">
+              <Link className="size-6" />
+            </div>
+          </a>
+          <h1 className="text-xl font-bold">Welcome to Yourl</h1>
+        </div>
+
+        <Field className="m-auto gap-4">
+          <form method="POST" action="http://localhost:3000/auth/signin/google">
+            <Button variant="outline" type="submit">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-google"
+                viewBox="0 0 16 16"
+              >
+                <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z" />
               </svg>
-              Continue with Apple
+              Continue with Google
             </Button>
-            <a href="h">
-              <Button variant="outline" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path
-                    d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                    fill="currentColor"
-                  />
-                </svg>
-                Continue with Google
-              </Button>
-            </a>
-          </Field>
-        </FieldGroup>
-      </form>
+            <input type="hidden" name="csrfToken" value={token.csrfToken} />
+          </form>
+          <form method="POST" action="http://localhost:3000/auth/signin/github">
+            <Button variant="outline" type="submit">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-github"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
+              </svg>
+              Sign in with Github
+            </Button>
+            <input type="hidden" name="csrfToken" value={token.csrfToken} />
+          </form>
+        </Field>
+      </FieldGroup>
       <FieldDescription className="px-6 text-center">
         By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.

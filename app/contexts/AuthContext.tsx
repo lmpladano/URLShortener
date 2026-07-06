@@ -2,16 +2,21 @@
 
 import { createContext, useState, useEffect } from "react";
 import { authHelper } from "@/lib/api/url";
+import { Auth, User } from "@/lib/types";
 
-export const AuthContext = createContext<boolean | null>(null);
+export const AuthContext = createContext<Auth | null>(null);
 
 export default function AuthContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [isAuthencticated, setIsAuthenticaded] = useState(false);
-  const [user, setUser] = useState({});
+  const [isAuthenticated, setIsAuthenticaded] = useState(false);
+  const [user, setUser] = useState<User>({
+    name: "",
+    email: "",
+    image: "",
+  });
 
   useEffect(() => {
     async function loadAuthHelper() {
@@ -27,7 +32,7 @@ export default function AuthContextProvider({
     void loadAuthHelper();
   }, []);
   const authValue = {
-    isAuthencticated,
+    isAuthenticated,
     user,
   };
   return (

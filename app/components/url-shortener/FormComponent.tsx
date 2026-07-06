@@ -18,13 +18,19 @@ export default function FormComponent({ onListChanged }: FormComponentProps) {
 
     const form = e.currentTarget;
     const rawlink: string = String(new FormData(form).get("rawLink") || "");
+    const custom: string = String(new FormData(form).get("custom") || "");
+
+    const item = {
+      rawlink,
+      custom,
+    };
 
     if (!isHttpUrl(rawlink)) {
       setHasError(true);
     } else {
       try {
         setHasError(false);
-        await createShortUrl(rawlink);
+        await createShortUrl(item);
         await onListChanged();
         form.reset();
       } catch (error: unknown) {
@@ -46,6 +52,7 @@ export default function FormComponent({ onListChanged }: FormComponentProps) {
           <Field>
             <ButtonGroup>
               <Input placeholder="Paste in a valid Url" name="rawLink" />
+              <Input placeholder="custom slug" name="custom" />
               <Button variant="outline" type="submit">
                 <Save />
               </Button>

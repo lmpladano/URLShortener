@@ -8,7 +8,7 @@ export default async function Home() {
       <AuthContextProvider>
         <NavBar />
         <div className=" flex min-h-200 flex-col items-center justify-center gap-2 bg-background p-2 md:p-10">
-          <div className="w-full max-w-8xl">
+          <div className="w-full max-w-5xl">
             <UrlShortenerClient />
           </div>
         </div>

@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react";
 import FormComponent from "./FormComponent";
 import ListComponent from "./ListComponent";
 import TopMenu from "./TopMenu";
-import useAuth from "@/app/hooks/useAuth";
 import { fetchListData } from "@/lib/api/url";
 import type { UrlItem } from "@/lib/types";
 

@@ -36,7 +36,7 @@ export async function authHelper() {
   }
 }
 
-export async function createShortUrl(rawlink: string) {
+export async function createShortUrl(rawlink: object) {
   const response = await fetch("http://localhost:3000/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

@@ -1,5 +1,3 @@
-import { ListItem } from "./ListItem";
-import useAuth from "@/app/hooks/useAuth";
 import type { UrlItem } from "@/lib/types";
 import { deleteShortUrl } from "@/lib/api/url";
 import { ExternalLink, X, Copy } from "lucide-react";
@@ -24,15 +22,17 @@ export default function ListComponent({
   list,
   onListChanged,
 }: ListComponentProps) {
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    e: React.FormEvent<HTMLFormElement>,
+    identifier: string,
+  ) {
     e.preventDefault();
-    console.log(e.target[0].id);
     try {
-      await deleteShortUrl(e.target[0].id);
+      await deleteShortUrl(identifier);
       await onListChanged();
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : String(error);
-      console.log(message);
+      return message;
     }
   }
 
@@ -64,9 +64,8 @@ export default function ListComponent({
                     <ExternalLink />
                   </Button>
                 </a>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(e) => handleSubmit(e, item.base62)}>
                   <Button
-                    id={item.base62}
                     type="submit"
                     variant="ghost"
                     size="icon"
