@@ -30,10 +30,10 @@ export function ListItem({ item, onListChanged }: ListComponentProps) {
 
   return (
     <>
-      <Item variant="outline" className="my-3">
+      <Item variant="outline" className="my-3 bg-[#fafafa]">
         <ItemContent className="gap-1">
           <ItemTitle>{item.shortened}</ItemTitle>
-          <ItemDescription className="truncate w-90">
+          <ItemDescription className="truncate w-80 text-xs">
             {item.original}
           </ItemDescription>
         </ItemContent>

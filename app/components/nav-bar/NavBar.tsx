@@ -3,12 +3,13 @@ import { Link, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useAuth from "@/app/hooks/useAuth";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function NavBar() {
   const auth = useAuth();
   return (
     <>
-      <div className="flex items-center px-10 justify-between border-b">
+      <div className="flex items-center px-20 justify-between">
         <div className="py-5 flex items-center">
           <Button variant="link" className="p-0">
             <Link />
@@ -17,7 +18,9 @@ export default function NavBar() {
           <h1 className="text-xl font-semibold">Yourl</h1>
         </div>
         <div className="flex gap-2.5 items-center">
-          {auth.isAuthenticated ? (
+          {auth.isLoading ? (
+            <Spinner />
+          ) : auth.isAuthenticated ? (
             <div className="flex gap-2.5 items-center">
               <Avatar size="sm">
                 <AvatarImage src={auth.user.image} />
@@ -43,7 +46,7 @@ export default function NavBar() {
                 </svg>
               </Button>
               <a href="/login">
-                <Button>Sign In</Button>
+                <Button className="rounded-full">Sign In</Button>
               </a>
             </div>
           )}

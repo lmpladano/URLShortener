@@ -1,17 +1,18 @@
 import type { UrlItem } from "@/lib/types";
-import { deleteShortUrl } from "@/lib/api/url";
-import { ExternalLink, X, Copy } from "lucide-react";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+// import { deleteShortUrl } from "@/lib/api/url";
+// import { ExternalLink, X, Copy } from "lucide-react";
+// import {
+//   Table,
+//   TableBody,
+//   TableCaption,
+//   TableCell,
+//   TableFooter,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "@/components/ui/table";
+// import { Button } from "@/components/ui/button";
+import { ListItem } from "./ListItem";
 
 type ListComponentProps = {
   list: UrlItem[];
@@ -22,23 +23,27 @@ export default function ListComponent({
   list,
   onListChanged,
 }: ListComponentProps) {
-  async function handleSubmit(
-    e: React.FormEvent<HTMLFormElement>,
-    identifier: string,
-  ) {
-    e.preventDefault();
-    try {
-      await deleteShortUrl(identifier);
-      await onListChanged();
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : String(error);
-      return message;
-    }
-  }
+  // async function handleSubmit(
+  //   e: React.FormEvent<HTMLFormElement>,
+  //   identifier: string,
+  // ) {
+  //   e.preventDefault();
+  //   try {
+  //     await deleteShortUrl(identifier);
+  //     await onListChanged();
+  //   } catch (error: unknown) {
+  //     const message = error instanceof Error ? error.message : String(error);
+  //     return message;
+  //   }
+  // }
+
+  const shortLinks = list.map((item) => (
+    <ListItem key={item.base62} onListChanged={onListChanged} item={item} />
+  ));
 
   return (
-    <div className="rounded-md border overflow-x-auto p-5">
-      <Table className="w-full">
+    <div className="mt-10 grid grid-cols-3 gap-4">
+      {/* <Table className="w-full">
         <TableCaption>Yourl Links.</TableCaption>
         <TableHeader>
           <TableRow>
@@ -81,7 +86,8 @@ export default function ListComponent({
         <TableFooter>
           <TableRow></TableRow>
         </TableFooter>
-      </Table>
+      </Table> */}
+      {shortLinks}
     </div>
   );
 }

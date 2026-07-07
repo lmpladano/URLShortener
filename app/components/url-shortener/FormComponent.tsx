@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Field, FieldGroup } from "@/components/ui/field";
-import { ButtonGroup } from "@/components/ui/button-group";
+import { Field, FieldGroup, FieldDescription } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { createShortUrl } from "@/lib/api/url";
-import { Save } from "lucide-react";
 import { isHttpUrl } from "@/lib/utils";
 
 type FormComponentProps = {
@@ -43,20 +41,15 @@ export default function FormComponent({ onListChanged }: FormComponentProps) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <FieldGroup className="my-10">
-          <div className="flex flex-col items-center text-center">
-            <h1 className="text-2xl font-semibold">
-              Free URLShortener For Everyone
-            </h1>
-          </div>
+        <h1 className="font-bold">Dashboard</h1>
+        <FieldGroup className="mt-10">
           <Field>
-            <ButtonGroup>
+            <FieldDescription>Create new link</FieldDescription>
+            <div className="flex gap-4">
               <Input placeholder="Paste in a valid Url" name="rawLink" />
               <Input placeholder="custom slug" name="custom" />
-              <Button variant="outline" type="submit">
-                <Save />
-              </Button>
-            </ButtonGroup>
+              <Button type="submit">Shorten</Button>
+            </div>
             {hasError && <span className="text-red-500">type a valid url</span>}
           </Field>
         </FieldGroup>

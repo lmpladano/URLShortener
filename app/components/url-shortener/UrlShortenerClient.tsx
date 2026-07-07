@@ -4,9 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 
 import FormComponent from "./FormComponent";
 import ListComponent from "./ListComponent";
-import TopMenu from "./TopMenu";
 import { fetchListData } from "@/lib/api/url";
 import type { UrlItem } from "@/lib/types";
+import Landing from "../landing/Landing";
+import useAuth from "@/app/hooks/useAuth";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function UrlShortenerClient() {
   const [list, setList] = useState<UrlItem[]>([]);
@@ -34,11 +36,20 @@ export default function UrlShortenerClient() {
     };
   }, []);
 
+  const auth = useAuth();
+
   return (
     <>
-      <FormComponent onListChanged={refreshList} />
-      <TopMenu />
-      <ListComponent onListChanged={refreshList} list={list} />
+      {auth.isLoading ? (
+        <Spinner />
+      ) : auth.isAuthenticated ? (
+        <div className="w-6xl m-auto rounded-md border p-10">
+          <FormComponent onListChanged={refreshList} />
+          <ListComponent onListChanged={refreshList} list={list} />
+        </div>
+      ) : (
+        <Landing />
+      )}
     </>
   );
 }

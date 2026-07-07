@@ -1,4 +1,4 @@
-import type { UrlItem } from "../types";
+import type { AuthResponse, UrlItem } from "../types";
 
 export async function fetchListData(): Promise<UrlItem[]> {
   const url = `http://localhost:3000/`;
@@ -18,7 +18,7 @@ export async function fetchListData(): Promise<UrlItem[]> {
   }
 }
 
-export async function authHelper() {
+export async function authHelper(): Promise<AuthResponse> {
   const url = `http://localhost:3000/api/auth/me`;
 
   try {
@@ -32,7 +32,14 @@ export async function authHelper() {
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     console.error("Fetch operation failed:", message);
-    return message;
+    return {
+      authenticated: false,
+      user: {
+        name: "",
+        email: "",
+        image: "",
+      },
+    };
   }
 }
 

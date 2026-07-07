@@ -11,6 +11,12 @@ export type User = {
 };
 
 export type Auth = {
+  isLoading: boolean;
   isAuthenticated: boolean;
+  user: User;
+};
+
+export type AuthResponse = {
+  authenticated: boolean;
   user: User;
 };

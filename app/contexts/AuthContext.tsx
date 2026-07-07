@@ -12,6 +12,7 @@ export default function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [isAuthenticated, setIsAuthenticaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User>({
     name: "",
     email: "",
@@ -20,18 +21,24 @@ export default function AuthContextProvider({
 
   useEffect(() => {
     async function loadAuthHelper() {
-      const authenticated = await authHelper();
-      if (authenticated.authenticated) {
-        console.log("This keeps being true");
-        console.log(authenticated.authenticated);
-        setIsAuthenticaded(authenticated.authenticated);
-        setUser(authenticated.user);
+      try {
+        const authenticated = await authHelper();
+
+        if (authenticated.authenticated) {
+          setIsAuthenticaded(true);
+          setUser(authenticated.user);
+        } else {
+          setIsAuthenticaded(false);
+        }
+      } finally {
+        setIsLoading(false);
       }
     }
 
     void loadAuthHelper();
   }, []);
   const authValue = {
+    isLoading,
     isAuthenticated,
     user,
   };
