@@ -43,7 +43,7 @@ export default function UrlShortenerClient() {
       {auth.isLoading ? (
         <Spinner />
       ) : auth.isAuthenticated ? (
-        <div className="w-6xl m-auto rounded-md border p-10">
+        <div className="m-auto w-full rounded-md border p-4 sm:p-6 lg:p-10">
           <FormComponent onListChanged={refreshList} />
           <ListComponent onListChanged={refreshList} list={list} />
         </div>

@@ -1,5 +1,6 @@
 "use client";
-import { Link, Menu } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useAuth from "@/app/hooks/useAuth";
@@ -7,11 +8,41 @@ import { Spinner } from "@/components/ui/spinner";
 
 export default function NavBar() {
   const auth = useAuth();
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    let isCurrent = true;
+    const savedTheme = window.localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+    const shouldUseDark = savedTheme ? savedTheme === "dark" : prefersDark;
+
+    document.documentElement.classList.toggle("dark", shouldUseDark);
+    queueMicrotask(() => {
+      if (isCurrent) {
+        setIsDark(shouldUseDark);
+      }
+    });
+
+    return () => {
+      isCurrent = false;
+    };
+  }, []);
+
+  function toggleTheme() {
+    const nextIsDark = !isDark;
+
+    document.documentElement.classList.toggle("dark", nextIsDark);
+    window.localStorage.setItem("theme", nextIsDark ? "dark" : "light");
+    setIsDark(nextIsDark);
+  }
+
   return (
     <>
       <div className="flex items-center px-20 justify-between">
         <div className="py-5 flex items-center">
-          <Button variant="link" className="p-0">
+          <Button variant="link" className="p-0 text-foreground">
             <Link />
           </Button>
 
@@ -28,7 +59,7 @@ export default function NavBar() {
               </Avatar>
               <p>{auth.user.name}</p>
               <a href="http://localhost:3000/auth/signout">
-                <Button variant="link">
+                <Button>
                   <Menu />
                 </Button>
               </a>
@@ -50,6 +81,16 @@ export default function NavBar() {
               </a>
             </div>
           )}
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={toggleTheme}
+            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {isDark ? <Sun /> : <Moon />}
+          </Button>
         </div>
       </div>
     </>

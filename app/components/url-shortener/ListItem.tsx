@@ -30,14 +30,17 @@ export function ListItem({ item, onListChanged }: ListComponentProps) {
 
   return (
     <>
-      <Item variant="outline" className="my-3 bg-[#fafafa]">
-        <ItemContent className="gap-1">
+      <Item
+        variant="outline"
+        className="my-0 max-sm:flex-row max-sm:items-center"
+      >
+        <ItemContent className="min-w-0 gap-1 overflow-hidden">
           <ItemTitle>{item.shortened}</ItemTitle>
-          <ItemDescription className="truncate w-80 text-xs">
+          <ItemDescription className="w-full max-w-full truncate text-xs sm:w-64 md:w-72 lg:w-80">
             {item.original}
           </ItemDescription>
         </ItemContent>
-        <ItemActions>
+        <ItemActions className="max-sm:ml-auto max-sm:shrink-0">
           <a href={item.shortened} target="_blank" rel="noreferrer">
             <Button variant="ghost" size="icon" className="rounded-full">
               <ExternalLink />

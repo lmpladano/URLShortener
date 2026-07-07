@@ -1,6 +1,7 @@
 import {
   ArrowRight,
-  BarChart3,
+  Eraser,
+  ExternalLink,
   Link2,
   LockKeyhole,
   Share2,
@@ -77,53 +78,81 @@ export default function Landing() {
           </div>
 
           <div className="rounded-lg border bg-card p-4 shadow-xs">
-            <div className="rounded-md border bg-background p-4">
-              <div className="mb-4 flex items-center justify-between border-b pb-3">
+            <div className="rounded-md border bg-background p-5">
+              <div className="mb-6 flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium">Dashboard preview</p>
+                  <p className="text-sm font-bold">Dashboard</p>
                   <p className="text-xs text-muted-foreground">
-                    Your private link workspace
+                    Create and manage your links
                   </p>
                 </div>
-                <div className="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">
-                  Signed in
+                <Button size="sm">add link +</Button>
+              </div>
+
+              <div className="mb-6 space-y-2">
+                <p className="text-xs text-muted-foreground">Create new link</p>
+                <div className="grid gap-2 sm:grid-cols-[1fr_0.55fr_auto]">
+                  <div className="truncate rounded-md border bg-background px-3 py-2 text-sm text-muted-foreground">
+                    Paste in a valid Url
+                  </div>
+                  <div className="truncate rounded-md border bg-background px-3 py-2 text-sm text-muted-foreground">
+                    custom slug
+                  </div>
+                  <Button size="sm">Shorten</Button>
                 </div>
               </div>
 
-              <div className="mb-4 flex gap-2 rounded-md border p-2">
-                <div className="flex-1 truncate rounded-sm bg-muted px-3 py-2 text-sm text-muted-foreground">
-                  https://example.com/very/long/product-launch-url
-                </div>
-                <Button size="sm">Shorten</Button>
-              </div>
-
-              <div className="space-y-2">
-                <div className="grid grid-cols-[1fr_auto] gap-3 rounded-md border p-3">
+              <div className="grid gap-3">
+                <div className="flex items-center justify-between gap-3 rounded-md border px-3 py-2">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">
                       yourl.app/music
                     </p>
                     <p className="truncate text-xs text-muted-foreground">
-                      spotify.com/playlist/new-release-mix
+                      https://spotify.com/playlist/new-release-mix
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <BarChart3 className="size-4" />
-                    42
+                  <div className="flex shrink-0 justify-end gap-1">
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      className="rounded-full"
+                    >
+                      <ExternalLink />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      className="rounded-full"
+                    >
+                      <Eraser className="text-red-600" />
+                    </Button>
                   </div>
                 </div>
-                <div className="grid grid-cols-[1fr_auto] gap-3 rounded-md border p-3">
+                <div className="flex items-center justify-between gap-3 rounded-md border px-3 py-2">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">
                       yourl.app/demo
                     </p>
                     <p className="truncate text-xs text-muted-foreground">
-                      github.com/luis/urlshortener
+                      https://github.com/luis/urlshortener
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <BarChart3 className="size-4" />
-                    18
+                  <div className="flex shrink-0 justify-end gap-1">
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      className="rounded-full"
+                    >
+                      <ExternalLink />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      className="rounded-full"
+                    >
+                      <Eraser className="text-red-600" />
+                    </Button>
                   </div>
                 </div>
               </div>

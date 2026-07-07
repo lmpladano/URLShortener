@@ -42,7 +42,7 @@ export default function ListComponent({
   ));
 
   return (
-    <div className="mt-10 grid grid-cols-3 gap-4">
+    <div className="mt-5 grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-2 xl:gap-4">
       {/* <Table className="w-full">
         <TableCaption>Yourl Links.</TableCaption>
         <TableHeader>

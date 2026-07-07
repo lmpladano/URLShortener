@@ -41,14 +41,24 @@ export default function FormComponent({ onListChanged }: FormComponentProps) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <h1 className="font-bold">Dashboard</h1>
+        <h1 className="font-bold">Links</h1>
         <FieldGroup className="mt-10">
           <Field>
             <FieldDescription>Create new link</FieldDescription>
-            <div className="flex gap-4">
-              <Input placeholder="Paste in a valid Url" name="rawLink" />
-              <Input placeholder="custom slug" name="custom" />
-              <Button type="submit">Shorten</Button>
+            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+              <Input
+                placeholder="Paste in a valid Url"
+                name="rawLink"
+                className="sm:flex-1"
+              />
+              <Input
+                placeholder="custom slug"
+                name="custom"
+                className="sm:w-40 lg:w-48"
+              />
+              <Button type="submit" className="sm:w-auto">
+                Shorten
+              </Button>
             </div>
             {hasError && <span className="text-red-500">type a valid url</span>}
           </Field>
