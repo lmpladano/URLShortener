@@ -41,6 +41,17 @@ export default function ListComponent({
     <ListItem key={item.base62} onListChanged={onListChanged} item={item} />
   ));
 
+  if (list.length === 0) {
+    return (
+      <div className="mt-5 rounded-md border border-dashed p-6 text-center">
+        <p className="text-sm font-medium">No links yet</p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Create your first short link to start building your dashboard.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-5 grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-2 xl:gap-4">
       {/* <Table className="w-full">

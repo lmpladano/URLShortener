@@ -40,9 +40,9 @@ const features = [
 
 export default function Landing() {
   return (
-    <main className="bg-background">
-      <section className="mx-auto flex w-full flex-col gap-14 py-16 md:px-10 md:py-24">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+    <main className="w-full overflow-x-hidden bg-background">
+      <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6 md:px-10 md:py-24">
+        <div className="grid min-w-0 items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
           <div className="flex flex-col items-start gap-6">
             <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm text-muted-foreground">
               <Link2 className="size-4" />
@@ -77,21 +77,23 @@ export default function Landing() {
             </div>
           </div>
 
-          <div className="rounded-lg border bg-card p-4 shadow-xs">
-            <div className="rounded-md border bg-background p-5">
-              <div className="mb-6 flex items-center justify-between">
-                <div>
+          <div className="min-w-0 rounded-lg border bg-card p-3 shadow-xs sm:p-4">
+            <div className="min-w-0 rounded-md border bg-background p-3 sm:p-5">
+              <div className="mb-6 flex items-center justify-between gap-3">
+                <div className="min-w-0">
                   <p className="text-sm font-bold">Dashboard</p>
                   <p className="text-xs text-muted-foreground">
                     Create and manage your links
                   </p>
                 </div>
-                <Button size="sm">add link +</Button>
+                <Button size="sm" className="shrink-0">
+                  add link +
+                </Button>
               </div>
 
               <div className="mb-6 space-y-2">
                 <p className="text-xs text-muted-foreground">Create new link</p>
-                <div className="grid gap-2 sm:grid-cols-[1fr_0.55fr_auto]">
+                <div className="grid min-w-0 gap-2 sm:grid-cols-[1fr_0.55fr_auto]">
                   <div className="truncate rounded-md border bg-background px-3 py-2 text-sm text-muted-foreground">
                     Paste in a valid Url
                   </div>
@@ -103,7 +105,7 @@ export default function Landing() {
               </div>
 
               <div className="grid gap-3">
-                <div className="flex items-center justify-between gap-3 rounded-md border px-3 py-2">
+                <div className="flex min-w-0 items-center justify-between gap-3 rounded-md border px-3 py-2">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">
                       yourl.app/music
@@ -129,7 +131,7 @@ export default function Landing() {
                     </Button>
                   </div>
                 </div>
-                <div className="flex items-center justify-between gap-3 rounded-md border px-3 py-2">
+                <div className="flex min-w-0 items-center justify-between gap-3 rounded-md border px-3 py-2">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">
                       yourl.app/demo
