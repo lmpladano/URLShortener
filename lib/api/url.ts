@@ -1,7 +1,7 @@
 import type { AuthResponse, UrlItem } from "../types";
 
 export async function fetchListData(): Promise<UrlItem[]> {
-  const url = `http://localhost:3000/`;
+  const url = `https://urlshortener-backend-pmr9.onrender.com`;
 
   try {
     const response = await fetch(url, { credentials: "include" });
@@ -19,7 +19,7 @@ export async function fetchListData(): Promise<UrlItem[]> {
 }
 
 export async function authHelper(): Promise<AuthResponse> {
-  const url = `http://localhost:3000/api/auth/me`;
+  const url = `https://urlshortener-backend-pmr9.onrender.com/api/auth/me`;
 
   try {
     const response = await fetch(url, { credentials: "include" });
@@ -44,12 +44,15 @@ export async function authHelper(): Promise<AuthResponse> {
 }
 
 export async function createShortUrl(rawlink: object) {
-  const response = await fetch("http://localhost:3000/", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ value: rawlink }),
-    credentials: "include",
-  });
+  const response = await fetch(
+    "https://urlshortener-backend-pmr9.onrender.com",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ value: rawlink }),
+      credentials: "include",
+    },
+  );
   if (response.ok) {
     const data = await response.text();
     return data;
@@ -61,11 +64,14 @@ export async function createShortUrl(rawlink: object) {
 }
 
 export async function deleteShortUrl(dentry: string) {
-  const response = await fetch("http://localhost:3000/delete", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ value: dentry }),
-  });
+  const response = await fetch(
+    "https://urlshortener-backend-pmr9.onrender.com/delete",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ value: dentry }),
+    },
+  );
   if (response.ok) {
     const data = await response.text();
     return data;

@@ -10,7 +10,7 @@ export function LoginForm() {
 
   useEffect(() => {
     const fetchCsrfToken = async () => {
-      const url = `http://localhost:3000/auth/csrf`;
+      const url = `https://urlshortener-backend-pmr9.onrender.com/auth/csrf`;
 
       try {
         const response = await fetch(url, { credentials: "include" });
@@ -41,7 +41,10 @@ export function LoginForm() {
         </div>
 
         <Field className="m-auto gap-4">
-          <form method="POST" action="http://localhost:3000/auth/signin/google">
+          <form
+            method="POST"
+            action="https://urlshortener-backend-pmr9.onrender.com/auth/signin/google"
+          >
             <Button variant="outline" type="submit">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +60,10 @@ export function LoginForm() {
             </Button>
             <input type="hidden" name="csrfToken" value={token.csrfToken} />
           </form>
-          <form method="POST" action="http://localhost:3000/auth/signin/github">
+          <form
+            method="POST"
+            action="https://urlshortener-backend-pmr9.onrender.com/auth/signin/github"
+          >
             <Button variant="outline" type="submit">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
