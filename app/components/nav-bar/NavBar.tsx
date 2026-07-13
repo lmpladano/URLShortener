@@ -60,7 +60,7 @@ export default function NavBar() {
               <p className="hidden max-w-32 truncate text-sm sm:block">
                 {auth.user.name}
               </p>
-              <a href="http://localhost:3000/auth/signout">
+              <a href="https://urlshortener-backend-pmr9.onrender.com/auth/signout">
                 <Button
                   variant="link"
                   className="h-8 rounded-full px-2 text-xs sm:h-9 sm:px-2.5 sm:text-sm"
