@@ -1,7 +1,7 @@
 import type { AuthResponse, UrlItem } from "../types";
 
 export async function fetchListData(): Promise<UrlItem[]> {
-  const url = `https://urlshortener-backend-pmr9.onrender.com`;
+  const url = "/backend";
 
   try {
     const response = await fetch(url, { credentials: "include" });
@@ -19,7 +19,7 @@ export async function fetchListData(): Promise<UrlItem[]> {
 }
 
 export async function authHelper(): Promise<AuthResponse> {
-  const url = `https://urlshortener-backend-pmr9.onrender.com/api/auth/me`;
+  const url = "/backend/api/auth/me";
 
   try {
     const response = await fetch(url, { credentials: "include" });
@@ -45,7 +45,7 @@ export async function authHelper(): Promise<AuthResponse> {
 
 export async function createShortUrl(rawlink: object) {
   const response = await fetch(
-    "https://urlshortener-backend-pmr9.onrender.com",
+    "/backend",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,11 +65,12 @@ export async function createShortUrl(rawlink: object) {
 
 export async function deleteShortUrl(dentry: string) {
   const response = await fetch(
-    "https://urlshortener-backend-pmr9.onrender.com/delete",
+    "/backend/delete",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ value: dentry }),
+      credentials: "include",
     },
   );
   if (response.ok) {
